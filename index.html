@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Фото ротатор</title>
+    <style>
+        #rotator {
+            text-align: center;
+        }
+        #image-container {
+            position: relative;
+        }
+        #image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        #controls {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Фото ротатор</h2>
+    <div id="rotator">
+        <div id="image-container">
+            <img id="photo" src="" alt="Фото">
+            <p id="photo-count">0 / 0</p>
+            <p id="photo-title">Заголовок</p>
+            <p id="photo-description">Опис</p>
+        </div>
+        <div id="controls">
+            <a href="#" id="prev">Назад</a> |
+            <a href="#" id="next">Вперед</a>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let imagesArray = [
+            {
+                path: 'images/001.jpg',
+                title: 'ауд. 108',
+                description: 'Викладацька аудиторія'
+            },
+            {
+                path: 'images/002.jpg',
+                title: 'ауд. 103-а',
+                description: 'Лабораторія для студентів'
+            },
+            {
+                path: 'images/003.jpg',
+                title: 'ауд. 104',
+                description: 'Лабораторія для студентів'
+            }
+        ];
+
+        const photo = document.getElementById('photo');
+        const photoCount = document.getElementById('photo-count');
+        const photoTitle = document.getElementById('photo-title');
+        const photoDescription = document.getElementById('photo-description');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+
+        function updatePhoto(index) {
+            const image = imagesArray[index];
+            photo.src = image.path;
+            photoCount.textContent = `${index + 1} / ${imagesArray.length}`;
+            photoTitle.textContent = image.title;
+            photoDescription.textContent = image.description;
+            prevButton.style.display = index === 0 ? 'none' : 'inline';
+            nextButton.style display = index === imagesArray.length - 1 ? 'none' : 'inline';
+        }
+
+        function showPrevPhoto() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updatePhoto(currentIndex);
+            }
+        }
+
+        function showNextPhoto() {
+            if (currentIndex < imagesArray.length - 1) {
+                currentIndex++;
+                updatePhoto(currentIndex);
+            }
+        }
+
+        prevButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPrevPhoto();
+        });
+
+        nextButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            showNextPhoto();
+        });
+
+        updatePhoto(currentIndex);
+    </script>
+</body>
+</html>
